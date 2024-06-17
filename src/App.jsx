@@ -1,7 +1,10 @@
+import { useSelector } from "react-redux";
 import ToogleButton from "./components/ToogleButton";
 import UpdateTimeButton from "./components/UpdateTimeButton";
 
 function App() {
+  const chronoValue = useSelector((state) => state.chrono);
+  console.log(chronoValue);
   return (
     <div className="bg-slate-700 text-slate-100 pt-20 min-h-screen">
       <div className="max-w-xl mx-auto border border-slate-500 rounded p-10">
@@ -12,7 +15,7 @@ function App() {
             <p className="text-center mb-1">sessions</p>
             <div className="flex">
               <UpdateTimeButton sign={"-"} type={"session"} />
-              <p className="mx-4 text-xl">25</p>
+              <p className="mx-4 text-xl">{chronoValue.session.value / 60}</p>
               <UpdateTimeButton sign={"+"} type={"session"} />
             </div>
           </div>
@@ -22,18 +25,22 @@ function App() {
             <div className="flex">
               <UpdateTimeButton sign={"-"} type={"pause"} />
 
-              <p className="mx-4 text-xl">5</p>
+              <p className="mx-4 text-xl">{chronoValue.pause.value / 60}</p>
               <UpdateTimeButton sign={"+"} type={"pause"} />
             </div>
           </div>
         </div>
-        <p className="text-center mb-2 text-xl font-semibold">work</p>
+        <p className="text-center mb-2 text-xl font-semibold">
+          {chronoValue.displayedValue.heading}
+        </p>
         <p className="text-center flex justify-center mb-1">
           <span className="text-4xl p-4 rounded bg-slate-300 text-slate-900">
             25:00
           </span>
         </p>
-        <p className="mb-10 text-center">passed cycle(s) : 0</p>
+        <p className="mb-10 text-center">
+          passed cycle(s) : {chronoValue.cycles}
+        </p>
         <ToogleButton />
       </div>
     </div>

@@ -1,19 +1,32 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialeState = {
-  time: 0,
-  isRunning: false,
+const initialState = {
+  session: {
+    value: 1500,
+    runningValue: 1500,
+  },
+  pause: {
+    value: 300,
+    runningValue: 300,
+  },
+  isPlaying: false,
+  intervalId: undefined,
+  cycles: 0,
+  displayedValue: {
+    value: 1500,
+    heading: "work",
+  },
 };
 
 export const chronoSlice = createSlice({
   name: "chrono",
-  initialeState,
+  initialState,
   reducers: {
-    start: (state) => {
-      state.isRunning = true;
-    },
+    // chrono: (state) => {
+    //   return state;
+    // },
   },
 });
 
-export const { start } = chronoSlice.actions;
+export const { chrono } = chronoSlice.actions;
 export default chronoSlice.reducer;
