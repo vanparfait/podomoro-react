@@ -22,11 +22,25 @@ export const chronoSlice = createSlice({
   name: "chrono",
   initialState,
   reducers: {
-    // chrono: (state) => {
-    //   return state;
-    // },
+    updateChronoValues: (state, action) => {
+      const choosenState = state[action.payload.type];
+
+      if (choosenState.value + action.payload.value === 0) return;
+
+      if (action.payload.type === "session") {
+        if (!state.isPlaying) {
+          choosenState.value = choosenState.value + action.payload.value;
+          choosenState.runningValue = choosenState.value + action.payload.value;
+          state.displayedValue.value = choosenState.value;
+        } else {
+          choosenState.value = choosenState.value + action.payload.value;
+        }
+      } else if (action.payload.type === "pause") {
+        choosenState.value = choosenState.value + action.payload.value;
+      }
+    },
   },
 });
 
-export const { chrono } = chronoSlice.actions;
+export const { updateChronoValues } = chronoSlice.actions;
 export default chronoSlice.reducer;
