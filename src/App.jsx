@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import ToogleButton from "./components/ToogleButton";
 import UpdateTimeButton from "./components/UpdateTimeButton";
+import getFormattedValue from "./utils/getFormattedValue";
 
 function App() {
   const chronoValue = useSelector((state) => state.chrono);
@@ -35,7 +36,7 @@ function App() {
         </p>
         <p className="text-center flex justify-center mb-1">
           <span className="text-4xl p-4 rounded bg-slate-300 text-slate-900">
-            25:00
+            {getFormattedValue(chronoValue.displayedValue.value)}
           </span>
         </p>
         <p className="mb-10 text-center">
