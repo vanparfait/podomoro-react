@@ -8,7 +8,7 @@ const UpdateTimeButton = ({ sign, type }) => {
   function handleUpdate() {
     dispatch(updateChronoValues({ type, value: sign === "+" ? 60 : -60 }));
   }
-
+  console.log(updateChronoValues({ type, value: 60 }));
   return (
     <button
       onClick={handleUpdate}
