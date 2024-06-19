@@ -30,8 +30,9 @@ export const chronoSlice = createSlice({
       if (action.payload.type === "session") {
         if (!state.isPlaying) {
           choosenState.value = choosenState.value + action.payload.value;
-          choosenState.runningValue = choosenState.value + action.payload.value;
-          state.displayedValue.value = choosenState.value;
+          choosenState.runningValue =
+            choosenState.runningValue + action.payload.value;
+          state.displayedValue.value = choosenState.runningValue;
         } else {
           choosenState.value = choosenState.value + action.payload.value;
         }
@@ -40,7 +41,21 @@ export const chronoSlice = createSlice({
       }
     },
     tick(state, action) {
-      console.log("tick");
+      if (state.session.runningValue > 0) {
+        state.session.runningValue--;
+        state.displayedValue.value = state.session.runningValue;
+        state.displayedValue.heading = "work";
+      } else if (state.pause.runningValue) {
+        state.pause.runningValue--;
+        state.displayedValue.value = state.pause.runningValue;
+        state.displayedValue.heading = "pause";
+      } else {
+        state.cycles++;
+        state.session.runningValue = state.session.value - 1;
+        state.displayedValue.value = state.session.value - 1;
+        state.displayedValue.heading = "work";
+        state.pause.runningValue = state.pause.value;
+      }
     },
     setUpChrono: (state, action) => {
       state.isPlaying = true;
@@ -49,6 +64,10 @@ export const chronoSlice = createSlice({
     resetChrono: (state, action) => {
       window.clearInterval(state.intervalId);
       state.isPlaying = false;
+      state.session.runningValue = state.session.value;
+      state.pause.runningValue = state.pause.value;
+      state.displayedValue.value = state.session.runningValue;
+      state.cycles = 0;
     },
   },
 });
